@@ -9,26 +9,41 @@ https://www.cdc.gov/nchs/data/dvs/birth11-03final-ACC.pdf
 
 Might as well check everything...
 This should take as input a long table of Pat ID, ICD-9
+
+
+https://www.acog.org/reVITALize
+Not really that helpful as a practical matter:
+
+https://www.acog.org/-/media/Departments/Patient-Safety-and-Quality-Improvement/2014reVITALizeObstetricDataDefinitionsV10.pdf?dmc=1&ts=20191008T1507509431
+
+
 */
 
 	* Infant Characteristics
 	
 // Year of Birth 
+	* clearly
 
 // Month of Birth
+	* quarter, but not month
 
 // Sex 1 Male 0 Female
 	* this can be inferred from inpatient.
 
 // Place of Birth - County
+	* easy.	
 
 // City or Town
+	
 
 // Plurality
+	* Yes, there are different ICD-9's: V30, V31, V32, V33, ..., V39  
 
 // Place of Birth
+	* There is SOURCE_OF_ADMISSION but suppressed when TYPE_OF_ADMISSION == 4 (Newborn)
 
 // Name of Hospital or Birthing Center
+	* obviously
 
 	* Mother's characteristics
 
@@ -43,6 +58,7 @@ This should take as input a long table of Pat ID, ICD-9
 // Hispanic Origin? Other Spanish, Hispanic/Latina
 // Hispanic Origin? Other (Specify)
 // Mother of Hispanic Origin:  Unknown
+	* NO.  Baby only.  
 
 // Mother White
 
@@ -72,6 +88,7 @@ This should take as input a long table of Pat ID, ICD-9
 
 
 	* Prenatal Care
+		* All of this clearly no. 
 
 // Prenatal Care Y/N
 
@@ -99,30 +116,49 @@ This should take as input a long table of Pat ID, ICD-9
 // Hypertension Gestational
 
 // Hypertension Eclampsia
-
+	
+	
 // Previous Preterm Birth
-
+	* no
+	
 // Other Previous Poor Pregnancy Outcome 
+	* no.
 
 // Previous Cesarean Delivery. 
+	* Definitely not
 
 // Cervical Cerclage
+	* 67.51, but won't be present in infant record.
 
 // Tocolysis
+	* 644.03, potentially. http://www.icd9data.com/2012/Volume1/630-679/640-649/644/644.03.htm
+	* see also: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4618706/
+	* patients who might need it: 644.0x, 644.2x, 654.5x, 658.1x, 658.2x
 
 // External Cephalic Version: Successful
+	* looks like 652.1 for successful. 
+	* http://www.icd9data.com/2012/Volume1/630-679/650-659/652/652.1.htm
 
 // External Cephalic Version: Failed
 
 // Premature Rupture of the Membranes
+	* http://www.icd9data.com/2012/Volume1/630-679/650-659/658/658.13.htm
+	* 658.13 -> maternal or fetal?  
 
 // Precipitous Labor
+	* 661.3
+	* note: not a billing claim
 
 // Prolonged Labor
+	* 662.1
+	* note: not a billing claim 
 
 // Onset of Labor: None of the Above
 
 // Induction of Labor
+	* https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4853013/
+	* 73.01, 73.1 73.4
+	
 
 // Augmentation of Labor
 
@@ -133,6 +169,7 @@ This should take as input a long table of Pat ID, ICD-9
 
 
 // Steroids Lung Maturation Prior to Del
+	* would not show up since administration is prior to delivery.  
 
 // Antibiotics Mother During Labor
 	* potential infection ICD-9's listed here: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5771993/
@@ -174,6 +211,7 @@ This should take as input a long table of Pat ID, ICD-9
 	* maybe 659
 
 // Obs. Est. Gest.
+	* See below.
 
 // Assisted Ventilation Immediately Following Delivery
 	* V46.14 - http://www.icd9data.com/2012/Volume1/V01-V91/V40-V49/V46/V46.14.htm
@@ -249,10 +287,13 @@ This should take as input a long table of Pat ID, ICD-9
 	* APR DRG 581: (transferred, born here)
 
 // Name of Facility Infant Transferred to:
+	* cannot be done.
 
 // Birth Weight Calculated in Grams
+	* available within ranges below 2500 g, but not above.
 
 // Place of Death (check only one)
+	* only available if w/in hospital.  But compare this to hospital counted deaths in birth cert.  
 
 // Place of Death Facility Name (If not institution give street address)
 
