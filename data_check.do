@@ -16,6 +16,8 @@ Not really that helpful as a practical matter:
 
 https://www.acog.org/-/media/Departments/Patient-Safety-and-Quality-Improvement/2014reVITALizeObstetricDataDefinitionsV10.pdf?dmc=1&ts=20191008T1507509431
 
+Good list:
+http://www.icd9data.com/2012/Volume1/630-679/650-659/652/652.1.htm
 
 */
 
