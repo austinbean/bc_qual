@@ -3,6 +3,7 @@
 
 * Do aggregate level at the state first, then w/in hospital.  
 * Potentially by patient chars.
+* TODO - add indicators for as much as is available, collapse by patient, remerge back to original data by RECORD_ID 
 
 /*
 https://www.cdc.gov/nchs/data/dvs/birth11-03final-ACC.pdf
@@ -21,22 +22,86 @@ http://www.icd9data.com/2012/Volume1/630-679/650-659/652/652.1.htm
 
 */
 
+
+
+global whereami = "tuk39938" 
+global file_p = "/Users/${whereami}/Desktop/programs/volumeoutcome/"
+global data_p = "/Users/${whereami}/Google Drive/Texas PUDF Zipped Backup Files/"
+global maplocation "/Users/${whereami}/Google Drive/Choice Model with Fixed Effects/"
+
+
+* generate capacity measure from the hospital survey.
+clear 
+
+do "${data_p}Do Files/make_birth_data.do"
+
+
 	* Infant Characteristics
 	
 // Year of Birth 
-	* clearly
-
 // Month of Birth
 	* quarter, but not month
+	gen DATE = quarterly(DISCHARGE, "YQ")
+	format DATE %tq
+	gen YEAR = yofd(dofq(DATE))
+	
+
 
 // Sex 1 Male 0 Female
-	* this can be inferred from inpatient.
+	gen SEX = 0
+	replace SEX = 1 if SEX_CODE == "M"
+	replace SEX = . if !(SEX_CODE == "M" | SEX_CODE == "F")
+	drop SEX_CODE
+	label variable SEX "1 if Male, . if UNK"
 
 // Place of Birth - County
 	* easy.	
 
 // City or Town
 	
+* RENAME prior to RESHAPE
+	rename ADMITTING_DIAG OTHER_DIAG_CODE_25
+	rename PRINC_DIAG_CODE OTHER_DIAG_CODE_26
+	rename PRINC_SURG_PROC_CODE OTHER_SURG_PROC_CODE_25
+	rename PRINC_ICD9_CODE OTHER_ICD9_CODE_25 
+
+	
+	
+* RESHAPE certain elements.  
+		keep RECORD_ID DATE YEAR SEX  OTHER_DIAG_CODE_* OTHER_SURG_PROC_CODE_* E_CODE_* CONDITION_CODE_* VALUE_CODE_* VALUE_AMOUNT_*
+	
+	
+	
+	reshape long OTHER_DIAG_CODE_ OTHER_SURG_PROC_CODE_ E_CODE_ CONDITION_CODE_ VALUE_CODE_ VALUE_AMOUNT_, i(RECORD_ID) j(pctr)
+	rename *_ *
+	replace OTHER_SURG_PROC_CODE = "" if OTHER_SURG_PROC_CODE == "."
+	drop if OTHER_SURG_PROC_CODE == "" & OTHER_DIAG_CODE == "" & E_CODE == "" & CONDITION_CODE == "" & VALUE_CODE == "" & VALUE_AMOUNT == .	
+	drop pctr
+	
+* Validate ICD-9's and generate description.
+	* DIAGNOSIS CODES
+	icd9 check OTHER_DIAG_CODE, generate(OTHER_DIAG_check)
+	replace OTHER_DIAG_CODE = "" if OTHER_DIAG_check != 0
+	icd9 generate OTHER_DIAG_CODE_CAT = OTHER_DIAG_CODE, category
+	icd9 generate OTHER_DIAG_CODE_desc = OTHER_DIAG_CODE, description long
+	drop OTHER_DIAG_check
+	log using "${data_p}log files/birth_data_diagcode_desc.log", replace
+	tab OTHER_DIAG_CODE_desc
+	log close
+	
+	* PROCEDURE CODES 
+	icd9p check OTHER_SURG_PROC_CODE, gen(SURG_PROC_check)
+	replace OTHER_SURG_PROC_CODE = "" if SURG_PROC_check != 0
+	icd9p generate OTHER_SURG_PROC_CODE_CAT = OTHER_SURG_PROC_CODE, category
+	icd9p generate OTHER_SURG_PROC_CODE_desc = OTHER_SURG_PROC_CODE, description long
+	drop SURG_PROC_CODE_check
+	log using "${data_p}log files/birth_data_surg_proc_desc.log", replace
+	tab OTHER_SURG_PROC_CODE_desc
+	log close
+	
+* sort
+	sort RECORD_ID OTHER_DIAG_CODE 
+	* ANYTHING TBD via ICD-9's here.  
 
 // Plurality
 	* Yes, there are different ICD-9's: V30, V31, V32, V33, ..., V39  
