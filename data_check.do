@@ -36,6 +36,28 @@ clear
 do "${data_p}Do Files/make_birth_data.do"
 
 
+* Weights
+
+	gen WT_CAT = 0
+	replace WT_CAT = 1 if BWT_L500 == 1
+	replace WT_CAT = 2 if BWT_500_749 == 1
+	replace WT_CAT = 3 if BWT_750_999 == 1
+	replace WT_CAT = 4 if BWT_1000_1249 == 1
+	replace WT_CAT = 5 if BWT_1250_1499 == 1
+	replace WT_CAT = 6 if BWT_1500_1999 == 1
+	replace WT_CAT = 7 if BWT_2000_2499 == 1
+	replace WT_CAT = 8 if BWT_G2500 == 1
+	label define  cat_lab 1 "< 500 g." 2 "500-749 g." 3 "750-999 g." 4 "999-1249 g." 5 "1250-1499 g." 6 "1500-1999 g." 7 "2000-2499 g." 8 "> 2500 g."
+	label values WT_CAT cat_lab
+	
+	gen WT_SUM = 0
+	replace WT_SUM = 1 if VLBW == 1
+	replace WT_SUM = 2 if LBW == 1 & VLBW == 0
+	replace WT_SUM = 3 if BWT_G2500 == 1
+	label define sum_lab 1 "<1500 g." 2 "1500-2500 g." 3 ">2500 g."
+	label values WT_SUM sum_lab 
+
+
 	* Infant Characteristics
 	
 // Year of Birth 
