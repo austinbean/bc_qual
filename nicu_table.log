@@ -1,0 +1,406 @@
+------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/austinbean/Desktop/nicu_table.log
+  log type:  text
+ opened on:  11 Oct 2019, 14:29:30
+
+. 
+. foreach yr of numlist 2005(1)2010{
+  2. 
+.  quietly{
+  3.  
+. use "/Users/austinbean/Google Drive/Restricted Linked Birth Cohort Records/LinkCO`yr'US/
+> `yr'Denominator.dta", clear
+  4. 
+. keep if ostate == "TX"
+  5. count 
+  6. local total_birth_`yr' = `r(N)'
+  7. 
+. count if brthwgt > 2500 & ab_nicu == "N"
+  8. local total_g25_na_`yr' = `r(N)'
+  9. 
+. count if brthwgt > 2500 & ab_nicu == "Y"
+ 10. local total_g25_a_`yr' = `r(N)'
+ 11. 
+. count if brthwgt > 2500 & !(ab_nicu == "Y" | ab_nicu == "N")
+ 12. local total_g25_u_`yr' = `r(N)'
+ 13. 
+. count if brthwgt <= 2500 & ab_nicu == "N"
+ 14. local total_l25_na_`yr' = `r(N)'
+ 15. 
+. count if brthwgt <= 2500 & ab_nicu == "Y"
+ 16. local total_l25_a_`yr' = `r(N)'
+ 17. 
+. count if brthwgt <= 2500 & !(ab_nicu == "Y" | ab_nicu == "N")
+ 18. local total_l25_u_`yr' = `r(N)'
+ 19. 
+. count if brthwgt <= 1500 & ab_nicu == "N"
+ 20. local total_l15_na_`yr' = `r(N)'
+ 21. 
+. count if brthwgt <= 1500 & ab_nicu == "N" & infant_death_number == .
+ 22. local total_l15_nad_`yr' = `r(N)'
+ 23. 
+. count if brthwgt <= 1500 & ab_nicu == "N" & infant_death_number != .
+ 24. local total_l15_nadd_`yr' = `r(N)'
+ 25. 
+. count if brthwgt <= 1500 & ab_nicu == "Y"
+ 26. local total_l15_a_`yr' = `r(N)'
+ 27. 
+. count if brthwgt <= 1500 & !(ab_nicu == "Y" | ab_nicu == "N")
+ 28. local total_l15_u_`yr' = `r(N)'
+ 29. }
+ 30. di "   "
+ 31. di "   "
+ 32. di " ----------------- YEAR  `yr' ---------------------- "
+ 33. di "TOTAL BIRTHS              : `total_birth_`yr''"
+ 34. di " "
+ 35. di "> 2500 GRAMS, NOT ADMITTED: `total_g25_na_`yr''"
+ 36. di "> 2500 GRAMS, ADMITTED    : `total_g25_a_`yr'' "
+ 37. di "> 2500 GRAMS, UNKNOWN     : `total_g25_u_`yr'' "
+ 38. di " "
+ 39. di "LBW, NOT ADMITTED         : `total_l25_na_`yr''"
+ 40. di "LBW, ADMITTED             : `total_l25_a_`yr''"
+ 41. di "LBW, UNKNOWN              : `total_l25_u_`yr'' "
+ 42. di " "
+ 43. di "VLBW, NOT ADMITTED        : `total_l15_na_`yr''"
+ 44. di " OF NOT AD., ALIVE 1 YR   : `total_l15_nad_`yr''  "
+ 45. di " OF NOT AD., DTH W/N 1 YR : `total_l15_nadd_`yr''  "
+ 46. di "VLBW, ADMITTED            : `total_l15_a_`yr''"
+ 47. di "VLBW, UNKNOWN             : `total_l15_u_`yr'' "
+ 48. di "(BIRTH CERTIFICATE DATA)"
+ 49. 
+. 
+. }
+   
+   
+ ----------------- YEAR  2005 ---------------------- 
+TOTAL BIRTHS              : 392222
+ 
+> 2500 GRAMS, NOT ADMITTED: 348321
+> 2500 GRAMS, ADMITTED    : 11442 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 19638
+LBW, ADMITTED             : 12821
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1692
+ OF NOT AD., ALIVE 1 YR   : 1102  
+ OF NOT AD., DTH W/N 1 YR : 590  
+VLBW, ADMITTED            : 3972
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+   
+   
+ ----------------- YEAR  2006 ---------------------- 
+TOTAL BIRTHS              : 405879
+ 
+> 2500 GRAMS, NOT ADMITTED: 359567
+> 2500 GRAMS, ADMITTED    : 12017 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 20049
+LBW, ADMITTED             : 14246
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1693
+ OF NOT AD., ALIVE 1 YR   : 1693  
+ OF NOT AD., DTH W/N 1 YR : 0  
+VLBW, ADMITTED            : 4376
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+   
+   
+ ----------------- YEAR  2007 ---------------------- 
+TOTAL BIRTHS              : 414170
+ 
+> 2500 GRAMS, NOT ADMITTED: 367205
+> 2500 GRAMS, ADMITTED    : 12110 
+> 2500 GRAMS, UNKNOWN     : 2 
+ 
+LBW, NOT ADMITTED         : 20055
+LBW, ADMITTED             : 14798
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1636
+ OF NOT AD., ALIVE 1 YR   : 1131  
+ OF NOT AD., DTH W/N 1 YR : 505  
+VLBW, ADMITTED            : 4467
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+   
+   
+ ----------------- YEAR  2008 ---------------------- 
+TOTAL BIRTHS              : 412127
+ 
+> 2500 GRAMS, NOT ADMITTED: 364024
+> 2500 GRAMS, ADMITTED    : 13207 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 19796
+LBW, ADMITTED             : 15100
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1634
+ OF NOT AD., ALIVE 1 YR   : 1097  
+ OF NOT AD., DTH W/N 1 YR : 537  
+VLBW, ADMITTED            : 4344
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+   
+   
+ ----------------- YEAR  2009 ---------------------- 
+TOTAL BIRTHS              : 408391
+ 
+> 2500 GRAMS, NOT ADMITTED: 359329
+> 2500 GRAMS, ADMITTED    : 14115 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 18984
+LBW, ADMITTED             : 15963
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1514
+ OF NOT AD., ALIVE 1 YR   : 1514  
+ OF NOT AD., DTH W/N 1 YR : 0  
+VLBW, ADMITTED            : 4560
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+   
+   
+ ----------------- YEAR  2010 ---------------------- 
+TOTAL BIRTHS              : 392764
+ 
+> 2500 GRAMS, NOT ADMITTED: 345125
+> 2500 GRAMS, ADMITTED    : 14439 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 18178
+LBW, ADMITTED             : 15022
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 1554
+ OF NOT AD., ALIVE 1 YR   : 1554  
+ OF NOT AD., DTH W/N 1 YR : 0  
+VLBW, ADMITTED            : 4127
+VLBW, UNKNOWN             : 0 
+(BIRTH CERTIFICATE DATA)
+
+. 
+. 
+. frame create inpatient 
+
+. frame change inpatient
+
+. 
+. quietly {
+
+.         
+.         foreach yr of numlist 2005(1)2010{
+  2.         quietly{
+  3.         count if YEAR == `yr'
+  4.         local total_birth_`yr' = `r(N)'
+  5. 
+.         count if BWT_G2500 == 1 & ADMN_NICU == 0 & YEAR == `yr'
+  6.         local total_g25_na_`yr' = `r(N)'
+  7. 
+.         count if BWT_G2500 == 1 & ADMN_NICU == 1 & YEAR == `yr'
+  8.         local total_g25_a_`yr' = `r(N)'
+  9.         
+.         count if BWT_G2500 == 1 & !(ADMN_NICU == 1 | ADMN_NICU == 0) & YEAR == `yr'
+ 10.         local total_g25_u_`yr' = `r(N)'
+ 11. 
+.         count if LBW == 1 & ADMN_NICU == 0 & YEAR == `yr'
+ 12.         local total_l25_na_`yr' = `r(N)'
+ 13. 
+.         count if LBW == 1 & ADMN_NICU == 1 & YEAR == `yr'
+ 14.         local total_l25_a_`yr' = `r(N)'
+ 15.         
+.         count if LBW == 1 & !(ADMN_NICU == 1 | ADMN_NICU == 0) & YEAR == `yr'
+ 16.         local total_g25_u_`yr' = `r(N)'
+ 17. 
+.         count if VLBW == 1 & ADMN_NICU == 0 & YEAR == `yr'
+ 18.         local total_l15_na_`yr' = `r(N)'
+ 19.         
+.         count if VLBW == 1 & ADMN_NICU == 0 & YEAR == `yr' & (PATIENT_STATUS == 1)
+ 20.         local total_l15_nad_`yr' = `r(N)'
+ 21.         
+.         count if VLBW == 1 & ADMN_NICU == 0 & YEAR == `yr' & (PATIENT_STATUS == 20 | PAT
+> IENT_STATUS == 40 | PATIENT_STATUS == 41 | PATIENT_STATUS == 42 | PATIENT_STATUS == 43 )
+ 22.         local total_l15_nadd_`yr' = `r(N)'
+ 23. 
+.         count if VLBW == 1 & ADMN_NICU == 1 & YEAR == `yr'
+ 24.         local total_l15_a_`yr' = `r(N)'
+ 25.         
+.         count if VLBW == 1 & !(ADMN_NICU == 1 | ADMN_NICU == 0) & YEAR == `yr'
+ 26.         local total_g25_u_`yr' = `r(N)'
+ 27.         }
+ 28.         
+.         di "   "
+ 29.         di "   "
+ 30.         di " ----------------- YEAR  `yr' ---------------------- "
+ 31.         di "TOTAL BIRTHS              : `total_birth_`yr''"
+ 32.         di " "
+ 33.         di "> 2500 GRAMS, NOT ADMITTED: `total_g25_na_`yr''"
+ 34.         di "> 2500 GRAMS, ADMITTED    : `total_g25_a_`yr'' "
+ 35.         di "> 2500 GRAMS, UNKNOWN     : `total_g25_u_`yr'' "
+ 36.         di " "
+ 37.         di "LBW, NOT ADMITTED         : `total_l25_na_`yr''"
+ 38.         di "LBW, ADMITTED             : `total_l25_a_`yr''"
+ 39.         di "LBW, UNKNOWN              : `total_l25_u_`yr'' "
+ 40.         di " "
+ 41.         di "VLBW, NOT ADMITTED        : `total_l15_na_`yr''"
+ 42.         di "  OF THOSE, DISC. NORMAL  : `total_l15_nad_`yr''"
+ 43.         di "  OF THOSE, DEATHS        : `total_l15_nadd_`yr''"
+ 44.         di "VLBW, ADMITTED            : `total_l15_a_`yr''"
+ 45.         di "VLBW, UNKNOWN             : `total_l15_u_`yr'' "
+ 46.         di "(INPATIENT DATA)"
+ 47. 
+.         }
+   
+   
+ ----------------- YEAR  2005 ---------------------- 
+TOTAL BIRTHS              : 361754
+ 
+> 2500 GRAMS, NOT ADMITTED: 269311
+> 2500 GRAMS, ADMITTED    : 25016 
+> 2500 GRAMS, UNKNOWN     : 522 
+ 
+LBW, NOT ADMITTED         : 4453
+LBW, ADMITTED             : 12193
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 297
+  OF THOSE, DISC. NORMAL  : 32
+  OF THOSE, DEATHS        : 261
+VLBW, ADMITTED            : 3184
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+   
+   
+ ----------------- YEAR  2006 ---------------------- 
+TOTAL BIRTHS              : 376493
+ 
+> 2500 GRAMS, NOT ADMITTED: 321602
+> 2500 GRAMS, ADMITTED    : 29073 
+> 2500 GRAMS, UNKNOWN     : 5 
+ 
+LBW, NOT ADMITTED         : 5136
+LBW, ADMITTED             : 15104
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 313
+  OF THOSE, DISC. NORMAL  : 28
+  OF THOSE, DEATHS        : 283
+VLBW, ADMITTED            : 4024
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+   
+   
+ ----------------- YEAR  2007 ---------------------- 
+TOTAL BIRTHS              : 382677
+ 
+> 2500 GRAMS, NOT ADMITTED: 327105
+> 2500 GRAMS, ADMITTED    : 29118 
+> 2500 GRAMS, UNKNOWN     : 1 
+ 
+LBW, NOT ADMITTED         : 5146
+LBW, ADMITTED             : 15689
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 390
+  OF THOSE, DISC. NORMAL  : 37
+  OF THOSE, DEATHS        : 343
+VLBW, ADMITTED            : 4017
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+   
+   
+ ----------------- YEAR  2008 ---------------------- 
+TOTAL BIRTHS              : 377596
+ 
+> 2500 GRAMS, NOT ADMITTED: 319263
+> 2500 GRAMS, ADMITTED    : 31562 
+> 2500 GRAMS, UNKNOWN     : 11 
+ 
+LBW, NOT ADMITTED         : 5132
+LBW, ADMITTED             : 16005
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 423
+  OF THOSE, DISC. NORMAL  : 44
+  OF THOSE, DEATHS        : 350
+VLBW, ADMITTED            : 3894
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+   
+   
+ ----------------- YEAR  2009 ---------------------- 
+TOTAL BIRTHS              : 380859
+ 
+> 2500 GRAMS, NOT ADMITTED: 319495
+> 2500 GRAMS, ADMITTED    : 33652 
+> 2500 GRAMS, UNKNOWN     : 4 
+ 
+LBW, NOT ADMITTED         : 5422
+LBW, ADMITTED             : 16680
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 424
+  OF THOSE, DISC. NORMAL  : 41
+  OF THOSE, DEATHS        : 332
+VLBW, ADMITTED            : 4011
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+   
+   
+ ----------------- YEAR  2010 ---------------------- 
+TOTAL BIRTHS              : 370849
+ 
+> 2500 GRAMS, NOT ADMITTED: 310108
+> 2500 GRAMS, ADMITTED    : 32577 
+> 2500 GRAMS, UNKNOWN     : 0 
+ 
+LBW, NOT ADMITTED         : 5014
+LBW, ADMITTED             : 16559
+LBW, UNKNOWN              : 0 
+ 
+VLBW, NOT ADMITTED        : 398
+  OF THOSE, DISC. NORMAL  : 21
+  OF THOSE, DEATHS        : 369
+VLBW, ADMITTED            : 3883
+VLBW, UNKNOWN             : 0 
+(INPATIENT DATA)
+
+. 
+.         
+. /*
+> THREE NUMBERS NEED CORRECTING SINCE THEY APPEAR AS ZEROS
+> 
+> */
+. 
+. foreach nm of numlist 2006 2009 2010{
+  2. quietly{
+  3. use "/Users/austinbean/Google Drive/Restricted Linked Birth Cohort Records/LinkCO`nm'
+> US/`nm'Numerator.dta", clear
+  4. 
+. keep if ostate == "TX"
+  5. }
+  6. di "`nm'"
+  7. count if brthwgt <= 1500 & ab_nicu == "N"
+  8. 
+. }
+2006
+  567
+2009
+  490
+2010
+  564
+
+.         
+. log close
+      name:  <unnamed>
+       log:  /Users/austinbean/Desktop/nicu_table.log
+  log type:  text
+ closed on:  11 Oct 2019, 14:31:22
+------------------------------------------------------------------------------------------
